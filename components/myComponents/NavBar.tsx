@@ -1,62 +1,43 @@
 "use client";
 
+import StyledBadge from "@/helpers/StyledBadge";
 import Avatar from "@mui/material/Avatar";
-import Badge from "@mui/material/Badge";
-import { styled } from "@mui/material/styles";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
+import { FaUserGroup } from "react-icons/fa6";
 import { IoIosNotifications } from "react-icons/io";
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    backgroundColor: "#44b700",
-    color: "#44b700",
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    "&::after": {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      borderRadius: "50%",
-      animation: "ripple 1.2s infinite ease-in-out",
-      border: "1px solid currentColor",
-      content: '""',
-    },
-  },
-  "@keyframes ripple": {
-    "0%": {
-      transform: "scale(.8)",
-      opacity: 1,
-    },
-    "100%": {
-      transform: "scale(2.4)",
-      opacity: 0,
-    },
-  },
-}));
+import { IoHome } from "react-icons/io5";
+import { MdOutlineOndemandVideo } from "react-icons/md";
 
 function NavBar() {
+  const router = useRouter();
   return (
-    <div className="flex bg-blue-900 p-2 items-center justify-between gap-4 h-12">
-      <h1 className="text-white text-3xl font-bold">FRIENDIFY</h1>
-      <div className="flex items-center bg-white rounded-full w-[70vmin] gap-1 px-2">
-        <FaSearch />
-        <input type="text" className="flex-1 outline-none p-1" />
-      </div>
-      <div className="flex flex-row gap-2 text-white">
-        <Link href={"/home"} className={"underline"}>
-          HomePage
-        </Link>
-        <Link href={"/profile"}>Profile</Link>
+    <div className="flex bg-blue-900 p-2 items-center justify-between gap-4 h-12 px-5 sticky top-0 w-full z-10">
+      <div className="flex items-center gap-2 flex-1/3">
+        <h1 className="text-white text-xl font-bold">FRIENDIFY</h1>
+        <div className="flex items-center bg-white rounded-full gap-1 px-2 flex-1">
+          <FaSearch />
+          <input type="text" className="flex-1 outline-none p-1" />
+        </div>
       </div>
 
-      <div className="flex flex-row items-center gap-2 text-white">
+      <div className="flex flex-row gap-2 text-white flex-1/3 justify-around text-3xl">
+        <IoHome
+          className="cursor-pointer"
+          onClick={() => router.push("/home")}
+        />
+        <FaUserGroup className="cursor-pointer" />
+        <MdOutlineOndemandVideo className="cursor-pointer" />
+      </div>
+
+      <div className="flex flex-row justify-end items-center gap-2 text-white flex-1/3">
         <IoIosNotifications className="cursor-pointer text-2xl" />
         <StyledBadge
           overlap="circular"
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           variant="dot"
+          onClick={() => router.push("/profile")}
+          className="cursor-pointer"
         >
           <Avatar alt="Remy Sharp" src="2.jpg" />
         </StyledBadge>

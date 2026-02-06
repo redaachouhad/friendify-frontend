@@ -16,7 +16,7 @@ function Register() {
     console.log(data);
   };
   return (
-    <div className="w-[80vmin] h-max bg-[rgba(255,255,255,0.3)] rounded-md flex flex-col justify-start gap-3 p-4 z-10 backdrop-blur-md">
+    <div className="w-[80vmin] h-max bg-[rgba(255,255,255,0.2)] rounded-md flex flex-col justify-start gap-3 p-4 z-10 backdrop-blur-3xl">
       <div className="text-white flex justify-center items-center">
         <p className="text-sm md:text-5xl font-bold">FRIENDIFY</p>
       </div>
