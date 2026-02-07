@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
-import { IoIosNotifications } from "react-icons/io";
+import { IoIosNotifications, IoMdChatboxes } from "react-icons/io";
 import { IoHome } from "react-icons/io5";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 
@@ -21,13 +21,17 @@ function NavBar() {
         </div>
       </div>
 
-      <div className="flex flex-row gap-2 text-white flex-1/3 justify-around text-3xl">
+      <div className="flex flex-row gap-4 text-white flex-1/3 justify-around text-3xl">
         <IoHome
           className="cursor-pointer"
           onClick={() => router.push("/home")}
         />
         <FaUserGroup className="cursor-pointer" />
         <MdOutlineOndemandVideo className="cursor-pointer" />
+        <IoMdChatboxes
+          className="cursor-pointer"
+          onClick={() => router.push("/chat")}
+        />
       </div>
 
       <div className="flex flex-row justify-end items-center gap-2 text-white flex-1/3">

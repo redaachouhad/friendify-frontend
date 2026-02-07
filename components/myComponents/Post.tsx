@@ -1,4 +1,5 @@
 import StyledBadge from "@/helpers/StyledBadge";
+import useVisibilityPostWithComments from "@/store/useVisiblityPostWithComments";
 import Avatar from "@mui/material/Avatar";
 import Image from "next/image";
 import { BiLike } from "react-icons/bi";
@@ -6,6 +7,7 @@ import { FaRegMessage } from "react-icons/fa6";
 import { TbShare3 } from "react-icons/tb";
 
 function Post() {
+  const { toggleVisibilityPostWithComments } = useVisibilityPostWithComments();
   return (
     <div className="w-full rounded-md border border-gray-300 flex flex-col bg-white p-3 gap-3">
       {/* User */}
@@ -52,7 +54,10 @@ function Post() {
           <BiLike className="text-2xl" />
           <p>J'aime</p>
         </div>
-        <div className="flex items-center gap-2 cursor-pointer flex-1/3 justify-center">
+        <div
+          onClick={() => toggleVisibilityPostWithComments()}
+          className="flex items-center gap-2 cursor-pointer flex-1/3 justify-center"
+        >
           <FaRegMessage className="text-xl" />
           <p>Commenter</p>
         </div>

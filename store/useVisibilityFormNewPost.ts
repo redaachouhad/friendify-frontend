@@ -2,16 +2,16 @@ import { create } from "zustand";
 
 interface VisibilityFormNewPostState {
   isVisibleFormNewPost: boolean;
-  show: () => void;
-  hide: () => void;
-  toggle: () => void;
+  showVisibilityFormNewPost: () => void;
+  hideVisibilityFormNewPost: () => void;
+  toggleVisibilityFormNewPost: () => void;
 }
 
 const useVisibilityFormNewPost = create<VisibilityFormNewPostState>((set) => ({
   isVisibleFormNewPost: false,
-  show: () => set({ isVisibleFormNewPost: true }),
-  hide: () => set({ isVisibleFormNewPost: false }),
-  toggle: () =>
+  showVisibilityFormNewPost: () => set({ isVisibleFormNewPost: true }),
+  hideVisibilityFormNewPost: () => set({ isVisibleFormNewPost: false }),
+  toggleVisibilityFormNewPost: () =>
     set((state) => ({ isVisibleFormNewPost: !state.isVisibleFormNewPost })),
 }));
 

@@ -8,7 +8,7 @@ import { FaImage, FaPaperPlane, FaTimes } from "react-icons/fa";
 function FormCreatePost() {
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null); // store selected image
-  const { toggle } = useVisibilityFormNewPost();
+  const { toggleVisibilityFormNewPost } = useVisibilityFormNewPost();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ function FormCreatePost() {
     >
       {/* Close button */}
       <button
-        onClick={() => toggle()}
+        onClick={() => toggleVisibilityFormNewPost()}
         type="button"
         className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
       >

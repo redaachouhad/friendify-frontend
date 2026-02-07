@@ -9,7 +9,7 @@ import { IoCamera } from "react-icons/io5";
 function Profile() {
   const numbers = Array.from({ length: 8 }, (_, i) => i);
   return (
-    <div className="w-full h-scree bg-white flex flex-col">
+    <div className="w-full h-screen bg-white flex flex-col">
       {/* Nav Bar */}
       <NavBar />
       <div className="flex-1 flex flex-col items-center">

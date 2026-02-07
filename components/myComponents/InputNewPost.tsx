@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import Image from "next/image";
 
 function InputNewPost() {
-  const { toggle } = useVisibilityFormNewPost();
+  const { toggleVisibilityFormNewPost } = useVisibilityFormNewPost();
   return (
     <div className="p-2 bg-white rounded-md flex items-center gap-2 border border-gray-300">
       <StyledBadge
@@ -18,7 +18,7 @@ function InputNewPost() {
         type="text"
         placeholder="Quoi de neuf ?"
         className="border p-1.5 rounded-md flex-1 outline-none"
-        onClick={() => toggle()}
+        onClick={() => toggleVisibilityFormNewPost()}
       />
       <div className="flex items-center gap-2">
         <Image

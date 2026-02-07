@@ -3,24 +3,29 @@
 import FormCreatePost from "@/components/myComponents/FormCreatePost";
 import NavBar from "@/components/myComponents/NavBar";
 import PostsLanding from "@/components/myComponents/PostsLanding";
+import PostWithComments from "@/components/myComponents/PostWithComments";
 import RightBar from "@/components/myComponents/RightBar";
 import Sidebar from "@/components/myComponents/Sidebar";
 import useVisibilityFormNewPost from "@/store/useVisibilityFormNewPost";
+import useVisibilityPostWithComments from "@/store/useVisiblityPostWithComments";
 import { useEffect } from "react";
 
 function Home() {
-  const { isVisibleFormNewPost, hide } = useVisibilityFormNewPost();
+  const { isVisibleFormNewPost, hideVisibilityFormNewPost } =
+    useVisibilityFormNewPost();
+
+  const { isVisiblePostWithComments } = useVisibilityPostWithComments();
 
   useEffect(() => {
-    hide();
-  }, [hide]);
+    hideVisibilityFormNewPost();
+  }, [hideVisibilityFormNewPost]);
 
   return (
     <>
       <div className="w-full h-screen bg-black flex flex-col">
         {/* Nav Bar */}
         <NavBar />
-        <div className="flex-1 bg-gray-100 flex flex-row">
+        <div className="flex-1 bg-gray-100 flex flex-row justify-center">
           {/* Sidebar */}
           <Sidebar />
           {/* PostsLanding */}
@@ -32,6 +37,12 @@ function Home() {
       {isVisibleFormNewPost && (
         <div className="w-full h-full z-10 absolute top-0 left-0 bg-[rgba(0,0,0,0.8)] flex justify-center items-center">
           <FormCreatePost />
+        </div>
+      )}
+
+      {isVisiblePostWithComments && (
+        <div className="w-full h-full z-10 absolute top-0 left-0 bg-[rgba(0,0,0,0.8)] flex justify-center items-center">
+          <PostWithComments />
         </div>
       )}
     </>
