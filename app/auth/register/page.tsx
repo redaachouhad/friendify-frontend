@@ -30,23 +30,29 @@ function Register() {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-4"
       >
-        <div className="w-full">
-          <p className="text-white w-full">First Name</p>
-          <input
-            {...register("first_name")}
-            type="text"
-            className="w-full border border-white rounded-md p-1 text-white"
-          />
-        </div>
-        <div className="w-full">
-          <p className="text-white w-full">Last Name</p>
-          <input
-            {...register("last_name")}
-            type="text"
-            className="w-full border border-white rounded-md p-1 text-white"
-          />
+        <div className="flex justify-between col-span-2 gap-4">
+          {/* First Name */}
+          <div className="w-full">
+            <p className="text-white w-full">First Name</p>
+            <input
+              {...register("first_name")}
+              type="text"
+              className="w-full border border-white rounded-md p-1 text-white"
+            />
+          </div>
+
+          {/* Last Name */}
+          <div className="w-full">
+            <p className="text-white w-full">Last Name</p>
+            <input
+              {...register("last_name")}
+              type="text"
+              className="w-full border border-white rounded-md p-1 text-white"
+            />
+          </div>
         </div>
         <div className="w-full col-span-2">
+          {/* Email */}
           <p className="text-white w-full">Email</p>
           <input
             {...register("email")}
@@ -54,34 +60,36 @@ function Register() {
             className="w-full border border-white rounded-md p-1 text-white"
           />
         </div>
-        <div className="w-full">
-          <p className="text-white w-full">Birth Date</p>
-          <input
-            {...register("birth_date")}
-            type="date"
-            className="w-full border border-white rounded-md p-1 text-white"
-          />
-        </div>
-        <div className="w-full">
-          <p className="text-white w-full">Gender</p>
+        <div className="col-span-2 flex justify-between gap-4">
+          <div className="w-full">
+            <p className="text-white w-full">Birth Date</p>
+            <input
+              {...register("birth_date")}
+              type="date"
+              className="w-full border border-white rounded-md p-1 text-white"
+            />
+          </div>
+          <div className="w-full">
+            <p className="text-white w-full">Gender</p>
 
-          <select
-            {...register("gender")}
-            name="gender"
-            className="w-full border border-white rounded-md p-1 text-white"
-          >
-            <option value="" className="text-black">
-              Select Gender
-            </option>
-            <option value="male" className="text-black">
-              Male
-            </option>
-            <option value="female" className="text-black">
-              Female
-            </option>
-          </select>
+            <select
+              {...register("gender")}
+              name="gender"
+              className="w-full border border-white rounded-md p-1 text-white"
+            >
+              <option value="" className="text-black">
+                Select Gender
+              </option>
+              <option value="male" className="text-black">
+                Male
+              </option>
+              <option value="female" className="text-black">
+                Female
+              </option>
+            </select>
+          </div>
         </div>
-        <div className="w-full">
+        <div className="w-full col-span-2">
           <p className="text-white w-full">Password</p>
           <input
             {...register("password")}
@@ -89,7 +97,7 @@ function Register() {
             className="w-full border border-white rounded-md p-1 text-white"
           />
         </div>
-        <div className="w-full">
+        <div className="w-full col-span-2">
           <p className="text-white w-full">Confirm Password</p>
           <input
             {...register("password_confirmation")}

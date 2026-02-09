@@ -26,8 +26,14 @@ function NavBar() {
           className="cursor-pointer"
           onClick={() => router.push("/home")}
         />
-        <FaUserGroup className="cursor-pointer" />
-        <MdOutlineOndemandVideo className="cursor-pointer" />
+        <FaUserGroup
+          className="cursor-pointer"
+          onClick={() => router.push("/friends/all")}
+        />
+        <MdOutlineOndemandVideo
+          className="cursor-pointer"
+          onClick={() => router.push("/reels")}
+        />
         <IoMdChatboxes
           className="cursor-pointer"
           onClick={() => router.push("/chat")}

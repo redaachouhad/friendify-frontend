@@ -1,6 +1,5 @@
 "use client";
 
-import NavBar from "@/components/myComponents/NavBar";
 import Avatar from "@mui/material/Avatar";
 import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -78,9 +77,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="w-full h-screen bg-gray-100 flex flex-col">
-      <NavBar />
-
+    <>
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside className="w-72 bg-white border-r flex flex-col">
@@ -204,6 +201,6 @@ export default function ChatPage() {
           </div>
         </main>
       </div>
-    </div>
+    </>
   );
 }
