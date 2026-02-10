@@ -1,28 +1,24 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL, // backend URL
-  withCredentials: true, // if using cookies / auth
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Optional: interceptors
-api.interceptors.request.use(
-  (config) => {
-    // Example: attach token
-    // const token = localStorage.getItem("token");
-    // if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
-
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Centralized error handling
+    if (error.response?.status === 401) {
+      if (typeof window !== "undefined") {
+        const currentPath = window.location.pathname;
+        if (currentPath == "/auth/login") {
+          window.location.href = "/auth/login";
+        }
+      }
+    }
     return Promise.reject(error);
   },
 );

@@ -1,23 +1,39 @@
 "use client";
 
+import { loginUserApi } from "@/services/user.service";
+import { UserLoginType } from "@/types/user";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaUserAlt } from "react-icons/fa";
-
-type FormValues = {
-  email: string;
-  password: string;
-};
+import { FaSpinner, FaUserAlt } from "react-icons/fa";
 
 function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
+  // States
+  const { register, handleSubmit } = useForm<UserLoginType>();
 
-  const onSubmit = async (data: FormValues) => {
-    console.log(data);
+  const [errorsForm, setErrorsForm] = useState<any>();
+  const [hiddenSpin, setHiddenSpin] = useState<boolean>(true);
+  const router = useRouter();
+
+  const onSubmit = async (data: UserLoginType) => {
+    // showing the spinner
+    setHiddenSpin(false);
+
+    // login the user and get the response
+    const respData = await loginUserApi(data);
+    console.log(respData);
+    if (respData?.errors != null) {
+      setErrorsForm(respData.errors);
+    } else {
+      // redirect to the home page
+      router.push("/");
+    }
+
+    // console.log(respData);
+
+    // hiding the spinner
+    // setHiddenSpin(true);
   };
 
   return (
@@ -32,6 +48,7 @@ function Login() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        {/* Email */}
         <div className="w-full">
           <p className="text-white w-full mb-2">Email</p>
           <input
@@ -39,8 +56,10 @@ function Login() {
             type="email"
             className="w-full border border-white rounded-md p-1 text-white"
           />
+          <p className="text-red-500">{errorsForm?.email?.[0]}</p>
         </div>
 
+        {/* Password */}
         <div className="w-full">
           <p className="text-white w-full mb-2">Password</p>
           <input
@@ -48,11 +67,15 @@ function Login() {
             type="password"
             className="w-full border border-white rounded-md p-1 text-white"
           />
+          <p className="text-red-500">{errorsForm?.password?.[0]}</p>
         </div>
 
         <div className="col-span-2 flex justify-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-6 cursor-pointer ">
-            Login
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4 cursor-pointer flex items-center gap-4">
+            <FaSpinner
+              className={"text-lg animate-spin " + (hiddenSpin && "hidden")}
+            />
+            <p>Login</p>
           </button>
         </div>
       </form>

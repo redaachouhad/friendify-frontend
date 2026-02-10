@@ -10,3 +10,8 @@ export type UserRegisterType = {
   birth_date: Date;
   gender: "man" | "woman";
 };
+
+export type UserLoginType = {
+  email: string;
+  password: string;
+};
