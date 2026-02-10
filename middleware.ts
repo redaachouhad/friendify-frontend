@@ -38,7 +38,6 @@ export async function middleware(request: NextRequest) {
 // Securing page of the application
 export const config = {
   matcher: [
-    "/",
     "/home/:path*",
     "/chat/:path*",
     "/friends/:path*",

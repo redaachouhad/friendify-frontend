@@ -27,7 +27,7 @@ function Login() {
       setErrorsForm(respData.errors);
     } else {
       // redirect to the home page
-      router.push("/");
+      router.push("/home");
     }
 
     // console.log(respData);
