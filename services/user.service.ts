@@ -6,14 +6,20 @@ export const registerUserApi = async (userData: UserRegisterType) => {
   userData["status"] = "active";
 
   try {
-    const response = await api.post("/user/register", userData);
-    return response.data; // Success case
+    const response = await api.post("/auth/register", userData);
+    console.log(response.data);
+    console.log(response.status);
+    return {
+      status: response.status,
+      data: response.data?.details,
+    };
   } catch (error: any) {
-    // If Laravel returns 422, it lands here
-    if (error.response && error.response.data) {
-      return error.response.data;
-    }
-    return { errors: { global: "Something went wrong" } };
+    console.log(error.response.data);
+    console.log(error.response.status);
+    return {
+      status: error.response.status,
+      errors: error.response.data?.details,
+    };
   }
 };
 
@@ -21,7 +27,7 @@ export const registerUserApi = async (userData: UserRegisterType) => {
 
 export const loginUserApi = async (userData: UserLoginType) => {
   try {
-    const response = await api.post("/user/login", userData);
+    const response = await api.post("/auth/login", userData);
     return response.data;
   } catch (error: any) {
     if (error.response && error.response.data) {

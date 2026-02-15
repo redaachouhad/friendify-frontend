@@ -1,12 +1,26 @@
 "use client";
 
 import Post from "@/components/myComponents/Post";
+import api from "@/lib/axios";
+import { NewPostType } from "@/types/post";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaPen, FaPlus } from "react-icons/fa";
 import { IoCamera } from "react-icons/io5";
 
 function Profile() {
-  const numbers = Array.from({ length: 8 }, (_, i) => i);
+  // const numbers = Array.from({ length: 8 }, (_, i) => i);
+  const [posts, setPosts] = useState<NewPostType[]>([]);
+
+  const getPostsByUserId = () => {
+    try {
+      const response = api.get("/myPosts");
+    } catch (error: any) {
+      console.log(error?.response);
+    }
+  };
+
+  useEffect(() => {}, []);
   return (
     <div className="flex-1 flex flex-col items-center">
       <div className="max-w-5xl w-full rounded-b-3xl">
@@ -104,10 +118,9 @@ function Profile() {
             {/* My Posts */}
             <p className="text-2xl my-2 font-bold">My Posts</p>
             <div className="w-full flex flex-col justify-around gap-4 py-4">
-              <Post />
-              <Post />
-              <Post />
-              <Post />
+              {posts.map((post, index) => {
+                return <Post post={post} key={index} />;
+              })}
             </div>
           </div>
         </div>

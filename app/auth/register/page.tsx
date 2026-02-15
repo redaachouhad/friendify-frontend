@@ -13,7 +13,7 @@ import { FaSpinner, FaUserPlus } from "react-icons/fa";
 function Register() {
   // States
   const { register, handleSubmit } = useForm();
-  const [errorsForm, setErrorsForm] = useState<any>();
+  const [errorsForm, setErrorsForm] = useState();
   const [hiddenSpin, setHiddenSpin] = useState<boolean>(true);
   const router = useRouter();
 
@@ -26,12 +26,14 @@ function Register() {
     setHiddenSpin(false);
 
     const resData = await registerUserApi(data);
-
-    if (resData?.errors) {
-      setErrorsForm(resData.errors);
-    } else {
-      // Handle success (e.g., redirect to login or show success message)
+    if (resData.status === 201) {
+      // Registration successful, redirect to login page
       router.push("/auth/login");
+    } else {
+      // Validation errors from the server
+      if (resData?.errors) {
+        setErrorsForm(resData.errors);
+      }
     }
 
     // hide the spin
@@ -59,7 +61,7 @@ function Register() {
             type="text"
             name="first_name"
             register={register}
-            error={errorsForm?.first_name}
+            error={errorsForm?.firstName}
           />
 
           <FormInput
@@ -68,17 +70,17 @@ function Register() {
             type="text"
             name="last_name"
             register={register}
-            error={errorsForm?.last_name}
+            error={errorsForm?.lastName}
           />
         </div>
         <div className="flex justify-between col-span-2 gap-4">
           <FormInput
             label="Username"
             placeholder="you username"
-            name="username"
+            name="pseudonym"
             type="text"
             register={register}
-            error={errorsForm?.username}
+            error={errorsForm?.pseudonym}
           />
 
           <FormInput
@@ -108,7 +110,7 @@ function Register() {
             name="birth_date"
             type="date"
             register={register}
-            error={errorsForm?.birth_date}
+            error={errorsForm?.birthDate}
           />
           <FormSelect
             label="Gender"
@@ -136,7 +138,7 @@ function Register() {
           type="password"
           placeholder="confirm your password"
           register={register}
-          error={errorsForm?.password_confirmation}
+          error={errorsForm?.confirmPassword}
         />
 
         <div className="col-span-2 flex justify-center">

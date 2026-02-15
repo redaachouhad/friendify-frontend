@@ -6,7 +6,7 @@ import Image from "next/image";
 function InputNewPost() {
   const { toggleVisibilityFormNewPost } = useVisibilityFormNewPost();
   return (
-    <div className="p-2 bg-white rounded-md flex items-center gap-2 border border-gray-300">
+    <div className="p-2 bg-white rounded-md flex items-center gap-2 border border-gray-300 sticky top-0 z-10">
       <StyledBadge
         overlap="circular"
         anchorOrigin={{ vertical: "top", horizontal: "right" }}

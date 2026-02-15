@@ -27,7 +27,10 @@ export default function FormSelect({
       <p className="text-white w-full">{label}</p>
 
       <select
-        {...register(name)}
+        {...register(name, {
+          // required: "Please select a gender",
+          setValueAs: (value) => (value === "" ? null : value),
+        })}
         className="w-full border border-white rounded-md p-1 text-white bg-transparent"
       >
         <option value="" className="text-black">
@@ -43,7 +46,7 @@ export default function FormSelect({
 
       {error && (
         <p className="text-red-600 text-sm font-bold">
-          * {error[0] || "Invalid field"}
+          * {error || "Invalid field"}
         </p>
       )}
     </div>

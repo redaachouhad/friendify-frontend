@@ -1,8 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const token = request.cookies.get("token")?.value;
+  console.log("Token from middleware:", token);
 
   // Public routes
   if (
@@ -14,23 +16,22 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    // console.log("0000000000");
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/me`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
       method: "GET",
-      credentials: "include",
       headers: {
-        cookie: request.headers.get("cookie") || "",
+        // Option A: Send as Cookie (If you updated the filter to read cookies)
+        Cookie: `jwt=${token}`,
+        // Option B: Send as Authorization Header (Manual mapping)
+        // Authorization: `Bearer ${token}`,
       },
     });
-    // console.log("1111111111111");
-    // console.log(request.headers.get("cookie"));
 
-    if (res.status === 401) {
+    if (!res.ok) {
       return NextResponse.redirect(new URL("/auth/login", request.url));
     }
 
     return NextResponse.next();
-  } catch {
+  } catch (error) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 }

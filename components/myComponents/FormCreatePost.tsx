@@ -4,13 +4,14 @@ import { NewPostType } from "@/types/post";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaImage, FaPaperPlane, FaTimes } from "react-icons/fa";
+import { FaImage, FaPaperPlane, FaSpinner, FaTimes } from "react-icons/fa";
 
 function FormCreatePost() {
   const [image, setImage] = useState<File | null>(null);
   const { toggleVisibilityFormNewPost } = useVisibilityFormNewPost();
   const [formErrors, setFormErrors] = useState();
   const { hideVisibilityFormNewPost } = useVisibilityFormNewPost();
+  const [showBlockedButton, setShowBlockedButton] = useState<boolean>(false);
   // 1. Destructure setValue and watch from useForm
   const { register, handleSubmit, setValue, watch, reset } =
     useForm<NewPostType>({
@@ -44,6 +45,8 @@ function FormCreatePost() {
         formData.append("image", data.image);
       }
 
+      setShowBlockedButton(true);
+
       const response = await api.post("/post/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -70,6 +73,8 @@ function FormCreatePost() {
         setFormErrors(error?.response?.data?.errors);
       }
     }
+
+    setShowBlockedButton(false);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -175,14 +180,25 @@ function FormCreatePost() {
           </p>
         </label>
 
-        <button
-          type="submit"
-          disabled={!contentValue?.trim() && !image}
-          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-semibold disabled:opacity-50"
-        >
-          <FaPaperPlane />
-          Post
-        </button>
+        {showBlockedButton ? (
+          <button
+            type="submit"
+            disabled={true}
+            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-semibold disabled:opacity-50"
+          >
+            <FaSpinner className="animate-spin" />
+            Wait
+          </button>
+        ) : (
+          <button
+            type="submit"
+            disabled={!contentValue?.trim() && !image}
+            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-semibold disabled:opacity-50"
+          >
+            <FaPaperPlane />
+            Post
+          </button>
+        )}
       </div>
     </form>
   );

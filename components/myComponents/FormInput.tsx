@@ -32,7 +32,7 @@ export default function FormInput({
 
       {error && (
         <p className="text-red-600 text-sm font-bold">
-          * {error[0] || "Invalid field"}
+          * {error || "Invalid field"}
         </p>
       )}
     </div>
