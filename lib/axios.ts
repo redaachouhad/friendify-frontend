@@ -14,11 +14,12 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       if (typeof window !== "undefined") {
         const currentPath = window.location.pathname;
-        if (currentPath == "/auth/login") {
+        if (currentPath != "/auth/login") {
           window.location.href = "/auth/login";
         }
       }
     }
+
     return Promise.reject(error);
   },
 );

@@ -31,7 +31,7 @@ export default function FormInput({
       />
 
       {error && (
-        <p className="text-red-600 text-sm font-bold">
+        <p className="bg-red-600 text-sm font-bold text-white w-fit p-0.5 mt-2 rounded-sm">
           * {error || "Invalid field"}
         </p>
       )}

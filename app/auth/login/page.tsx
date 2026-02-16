@@ -1,5 +1,6 @@
 "use client";
 
+import FormInput from "@/components/myComponents/FormInput";
 import { loginUserApi } from "@/services/user.service";
 import { UserLoginType } from "@/types/user";
 import Link from "next/link";
@@ -21,19 +22,22 @@ function Login() {
     setHiddenSpin(false);
 
     // login the user and get the response
-    const respData = await loginUserApi(data);
-    console.log(respData);
-    if (respData?.errors != null) {
-      setErrorsForm(respData.errors);
+    const resData = await loginUserApi(data);
+
+    if (resData.status === 200) {
+      // Registration successful, redirect to login page
+      // router.push("/home");
     } else {
-      // redirect to the home page
-      router.push("/home");
+      // Validation errors from the server
+      if (resData?.errors) {
+        setErrorsForm(resData.errors);
+      }
     }
 
     // console.log(respData);
 
     // hiding the spinner
-    // setHiddenSpin(true);
+    setHiddenSpin(true);
   };
 
   return (
@@ -49,34 +53,38 @@ function Login() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         {/* Email */}
-        <div className="w-full">
-          <p className="text-white w-full mb-2">Email</p>
-          <input
-            {...register("email")}
-            type="email"
-            className="w-full border border-white rounded-md p-1 text-white"
-          />
-          <p className="text-red-500">{errorsForm?.email?.[0]}</p>
-        </div>
+
+        <FormInput
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="your email"
+          register={register}
+          error={errorsForm?.email}
+        />
 
         {/* Password */}
-        <div className="w-full">
-          <p className="text-white w-full mb-2">Password</p>
-          <input
-            {...register("password")}
-            type="password"
-            className="w-full border border-white rounded-md p-1 text-white"
-          />
-          <p className="text-red-500">{errorsForm?.password?.[0]}</p>
-        </div>
+        <FormInput
+          label="Password"
+          name="password"
+          type="password"
+          placeholder="your password"
+          register={register}
+          error={errorsForm?.password}
+        />
 
-        <div className="col-span-2 flex justify-center">
+        <div className="col-span-2 flex justify-center flex-col items-center gap-2">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4 cursor-pointer flex items-center gap-4">
             <FaSpinner
               className={"text-lg animate-spin " + (hiddenSpin && "hidden")}
             />
             <p>Login</p>
           </button>
+          {errorsForm?.authError && (
+            <p className="text-white font-semibold bg-red-500 p-0.5 rounded-md">
+              {"* " + errorsForm.authError}
+            </p>
+          )}
         </div>
       </form>
       <hr className="border-white" />

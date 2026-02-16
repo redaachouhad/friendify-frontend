@@ -45,7 +45,7 @@ export default function FormSelect({
       </select>
 
       {error && (
-        <p className="text-red-600 text-sm font-bold">
+        <p className="text-sm font-bold bg-red-600 text-white w-fit p-0.5 mt-2 rounded-sm">
           * {error || "Invalid field"}
         </p>
       )}

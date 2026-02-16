@@ -3,40 +3,49 @@ import { NextResponse } from "next/server";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const token = request.cookies.get("token")?.value;
-  console.log("Token from middleware:", token);
 
-  // Public routes
+  // 1. EXIT IMMEDIATELY if the user is on an auth page.
+  // This ensures the proxy DOES NOT intercept the 401 from your login form.
   if (
     pathname.startsWith("/auth") ||
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/favicon")
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/_next")
   ) {
     return NextResponse.next();
   }
 
+  const token = request.cookies.get("token")?.value;
+
+  // 2. If no token on a PROTECTED route, redirect to login.
+  if (!token) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
+
   try {
+    // 3. Verify the token with Spring Boot for protected routes (/home, /profile, etc.)
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
       method: "GET",
       headers: {
-        // Option A: Send as Cookie (If you updated the filter to read cookies)
-        Cookie: `jwt=${token}`,
-        // Option B: Send as Authorization Header (Manual mapping)
-        // Authorization: `Bearer ${token}`,
+        Cookies: `token=${token}`,
       },
     });
 
-    if (!res.ok) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
+    if (res.status === 401) {
+      const response = NextResponse.redirect(
+        new URL("/auth/login", request.url),
+      );
+      response.cookies.delete("token");
+      return response;
     }
 
     return NextResponse.next();
   } catch (error) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    // If backend is down, don't trap the user
+    return NextResponse.next();
   }
 }
 
-// Securing page of the application
+// Secure pages
 export const config = {
   matcher: [
     "/home/:path*",
